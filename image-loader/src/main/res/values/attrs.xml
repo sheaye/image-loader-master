@@ -3,10 +3,6 @@
 
     <attr name="imageLoader" format="reference"/>
     <attr name="placeholder" format="reference" />
-    <attr name="innerType">
-        <enum name="fresco" value="1" />
-        <enum name="glide" value="2" />
-    </attr>
     <attr name="scaleType">
         <enum name="none" value="-1" />
         <enum name="fitXY" value="0" />
@@ -20,7 +16,6 @@
     </attr>
 
     <declare-styleable name="ImageWrapperView">
-        <attr name="innerType"/>
         <attr name="placeholder"/>
         <attr name="scaleType"/>
     </declare-styleable>

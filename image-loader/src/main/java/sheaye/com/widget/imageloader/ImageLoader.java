@@ -1,6 +1,7 @@
 package sheaye.com.widget.imageloader;
 
 import android.net.Uri;
+import android.view.View;
 
 
 /**
@@ -12,4 +13,7 @@ public interface ImageLoader {
     void setImageUri(Uri uri);
 
     void setImageUrl(String url);
+
+    View getInnerView();
+
 }
