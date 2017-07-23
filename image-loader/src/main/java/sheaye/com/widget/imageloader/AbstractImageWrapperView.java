@@ -15,26 +15,26 @@ import sheaye.com.widget.R;
  * Created by yexinyan on 2017/7/21.
  */
 
-public abstract class ImageWrapperView extends FrameLayout {
+public abstract class AbstractImageWrapperView extends FrameLayout {
 
     private static final String TAG = "ImageWrapperView";
     private ImageLoader mImageLoader;
 
-    public ImageWrapperView(@NonNull Context context) {
+    public AbstractImageWrapperView(@NonNull Context context) {
         this(context, null, 0);
     }
 
-    public ImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public AbstractImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public AbstractImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context, attrs, defStyleAttr);
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageWrapperView, defStyleAttr, 0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AbstractImageWrapperView, defStyleAttr, 0);
         typedArray.recycle();
         mImageLoader = getImageLoader();
         addView(mImageLoader.getInnerView());

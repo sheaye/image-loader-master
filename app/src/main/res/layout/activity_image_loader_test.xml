@@ -7,17 +7,17 @@
     android:id="@+id/linear_layout"
     tools:context="com.sheaye.sample.ImageLoaderTestActivity">
 
-    <com.sheaye.sample.fresco.FrescoWrapperView
+    <com.sheaye.sample.fresco.ImageWrapperView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="100dp"/>
 
-    <com.sheaye.sample.fresco.FrescoWrapperView
+    <com.sheaye.sample.fresco.ImageWrapperView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="100dp"/>
 
-    <com.sheaye.sample.fresco.FrescoWrapperView
+    <com.sheaye.sample.fresco.ImageWrapperView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="100dp"/>

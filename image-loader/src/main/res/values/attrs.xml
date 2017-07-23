@@ -15,7 +15,7 @@
         <enum name="focusCrop" value="7" />
     </attr>
 
-    <declare-styleable name="ImageWrapperView">
+    <declare-styleable name="AbstractImageWrapperView">
         <attr name="placeholder"/>
         <attr name="scaleType"/>
     </declare-styleable>
