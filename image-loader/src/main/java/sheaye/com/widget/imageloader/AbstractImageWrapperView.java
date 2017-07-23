@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.annotation.AttrRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -38,7 +39,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
         mImageLoader = getImageLoader();
         addView(mImageLoader.getInnerView());
         int scaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_scaleType, -1);
-        mImageLoader.setImageScaleType(scaleType);
+        mImageLoader.setActualImageScaleType(scaleType);
         typedArray.recycle();
     }
 
@@ -58,15 +59,72 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
         }
     }
 
-    public void setImageUri(Uri uri) {
+    /**
+     * ensure this works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setImageUri(Uri uri) {
         if (mImageLoader != null) {
             mImageLoader.setImageUri(uri);
         }
+        return this;
     }
 
-    public void setImageUrl(String url) {
+    /**
+     * ensure this works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setImageUrl(String url) {
         if (mImageLoader != null) {
             mImageLoader.setImageUrl(url);
+        }
+        return this;
+    }
+
+    /**
+     * ensure this works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setActualImageScaleType(int scaleType) {
+        if (mImageLoader != null) {
+            mImageLoader.setActualImageScaleType(scaleType);
+        }
+        return this;
+    }
+
+    /**
+     * ensure this works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setPlaceHolderScaleType(int scaleType) {
+        if (mImageLoader != null) {
+            mImageLoader.setPlaceHolderScaleType(scaleType);
+        }
+        return this;
+    }
+
+    /**
+     * ensure this works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setPlaceHolderImage(int resId) {
+        if (mImageLoader != null) {
+            mImageLoader.setPlaceHolderImage(resId);
+        }
+        return this;
+    }
+
+    /**
+     * ensure this works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setRoundAsCircle(boolean round) {
+        if (mImageLoader != null) {
+            mImageLoader.setRoundAsCircle(round);
+        }
+        return this;
+    }
+
+    /**
+     * ensure some set work, please call commit() in the end.
+     */
+    public void commit() {
+        if (mImageLoader != null) {
+            mImageLoader.commit();
         }
     }
 

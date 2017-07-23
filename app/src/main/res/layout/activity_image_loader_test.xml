@@ -8,16 +8,19 @@
     tools:context="com.sheaye.sample.ImageLoaderTestActivity">
 
     <com.sheaye.sample.fresco.ImageWrapperView
+        android:id="@+id/image1_view"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="100dp"/>
 
     <com.sheaye.sample.fresco.ImageWrapperView
+        android:id="@+id/image2_view"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="100dp"/>
 
     <com.sheaye.sample.fresco.ImageWrapperView
+        android:id="@+id/image3_view"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="100dp"/>

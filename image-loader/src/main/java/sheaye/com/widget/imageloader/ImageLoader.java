@@ -11,7 +11,6 @@ import android.view.View;
 public interface ImageLoader {
 
     interface ScaleType {
-        int NONE = -1;
         int FIT_XY = 0;
         int FIT_START = 1;
         int FIT_CENTER = 2;
@@ -28,5 +27,13 @@ public interface ImageLoader {
 
     View getInnerView();
 
-    void setImageScaleType(int scaleType);
+    void setActualImageScaleType(int scaleType);
+
+    void setPlaceHolderScaleType(int scaleType);
+
+    void setPlaceHolderImage(int resId);
+
+    void setRoundAsCircle(boolean round);
+
+    void commit();
 }

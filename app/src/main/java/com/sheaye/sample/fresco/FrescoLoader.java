@@ -2,9 +2,14 @@ package com.sheaye.sample.fresco;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.IdRes;
+import android.support.v4.util.SparseArrayCompat;
 import android.view.View;
 
 import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import sheaye.com.widget.imageloader.ImageLoader;
@@ -15,10 +20,26 @@ import sheaye.com.widget.imageloader.ImageLoader;
 
 public class FrescoLoader implements ImageLoader {
 
+    private SparseArrayCompat<ScalingUtils.ScaleType> mScaleTypes = new SparseArrayCompat<ScalingUtils.ScaleType>() {
+        {
+            append(ScaleType.FIT_XY, ScalingUtils.ScaleType.FIT_XY);
+            append(ScaleType.FIT_START, ScalingUtils.ScaleType.FIT_START);
+            append(ScaleType.FIT_CENTER, ScalingUtils.ScaleType.FIT_CENTER);
+            append(ScaleType.FIT_END, ScalingUtils.ScaleType.FIT_END);
+            append(ScaleType.CENTER, ScalingUtils.ScaleType.CENTER);
+            append(ScaleType.CENTER_INSIDE, ScalingUtils.ScaleType.CENTER_INSIDE);
+            append(ScaleType.CENTER_CROP, ScalingUtils.ScaleType.CENTER_CROP);
+            append(ScaleType.FOCUS_CROP, ScalingUtils.ScaleType.FOCUS_CROP);
+        }
+    };
+
     private SimpleDraweeView mDraweeView;
+    private GenericDraweeHierarchyBuilder mHierarchyBuilder;
+    private GenericDraweeHierarchy mHierarchy;
 
     public FrescoLoader(Context context) {
         mDraweeView = new SimpleDraweeView(context);
+        mHierarchyBuilder = new GenericDraweeHierarchyBuilder(context.getResources());
     }
 
     @Override
@@ -27,27 +48,50 @@ public class FrescoLoader implements ImageLoader {
     }
 
     @Override
-    public void setImageScaleType(int scaleType) {
-        switch (scaleType){
-            case ScaleType.FIT_XY:
-                break;
-            case ScaleType.FIT_START:
-                break;
-            case ScaleType.FIT_CENTER:
-                break;
-            case ScaleType.FIT_END:
-                break;
-            case ScaleType.CENTER:
-                break;
-            case ScaleType.CENTER_INSIDE:
-                break;
-            case ScaleType.CENTER_CROP:
-                break;
-            case ScaleType.FOCUS_CROP:
-                break;
-            default:
-                break;
+    public void setActualImageScaleType(int index) {
+        ScalingUtils.ScaleType scaleType = mScaleTypes.get(index);
+        if (mHierarchy != null) {
+            mHierarchy.setActualImageScaleType(scaleType);
+        } else {
+            mHierarchyBuilder.setActualImageScaleType(scaleType);
         }
+    }
+
+    @Override
+    public void setPlaceHolderImage(int resId) {
+        if (mHierarchy != null) {
+            mHierarchy.setPlaceholderImage(resId);
+        } else {
+            mHierarchyBuilder.setPlaceholderImage(resId);
+        }
+    }
+
+    @Override
+    public void setRoundAsCircle(boolean asCircle) {
+        RoundingParams params = new RoundingParams();
+        params.setRoundAsCircle(asCircle);
+        if (mHierarchy != null) {
+            mHierarchy.setRoundingParams(params);
+        }else {
+            mHierarchyBuilder.setRoundingParams(params);
+        }
+    }
+
+    @Override
+    public void setPlaceHolderScaleType(int scaleType) {
+        if (mHierarchy != null) {
+            return;
+        }
+        mHierarchyBuilder.setPlaceholderImageScaleType(mScaleTypes.get(scaleType));
+    }
+
+    @Override
+    public void commit() {
+        if (mHierarchy != null) {
+            return;
+        }
+        mHierarchy = mHierarchyBuilder.build();
+        mDraweeView.setHierarchy(mHierarchy);
     }
 
     @Override
