@@ -35,9 +35,11 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AbstractImageWrapperView, defStyleAttr, 0);
-        typedArray.recycle();
         mImageLoader = getImageLoader();
         addView(mImageLoader.getInnerView());
+        int scaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_scaleType, -1);
+        mImageLoader.setImageScaleType(scaleType);
+        typedArray.recycle();
     }
 
     public abstract ImageLoader getImageLoader();

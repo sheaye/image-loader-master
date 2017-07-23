@@ -10,10 +10,23 @@ import android.view.View;
 
 public interface ImageLoader {
 
+    interface ScaleType {
+        int NONE = -1;
+        int FIT_XY = 0;
+        int FIT_START = 1;
+        int FIT_CENTER = 2;
+        int FIT_END = 3;
+        int CENTER = 4;
+        int CENTER_INSIDE = 5;
+        int CENTER_CROP = 6;
+        int FOCUS_CROP = 7;
+    }
+
     void setImageUri(Uri uri);
 
     void setImageUrl(String url);
 
     View getInnerView();
 
+    void setImageScaleType(int scaleType);
 }
