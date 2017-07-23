@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="imageLoader" format="reference"/>
+    <attr name="placeholder" format="reference" />
+    <attr name="innerType">
+        <enum name="fresco" value="1" />
+        <enum name="glide" value="2" />
+    </attr>
+    <attr name="scaleType">
+        <enum name="none" value="-1" />
+        <enum name="fitXY" value="0" />
+        <enum name="fitStart" value="1" />
+        <enum name="fitCenter" value="2" />
+        <enum name="fitEnd" value="3" />
+        <enum name="center" value="4" />
+        <enum name="centerInside" value="5" />
+        <enum name="centerCrop" value="6" />
+        <enum name="focusCrop" value="7" />
+    </attr>
+
+    <declare-styleable name="ImageWrapperView">
+        <attr name="innerType"/>
+        <attr name="placeholder"/>
+        <attr name="scaleType"/>
+    </declare-styleable>
+
+</resources>
