@@ -2,18 +2,7 @@
 <resources>
 
     <attr name="imageLoader" format="reference"/>
-    <attr name="actualScaleType">
-        <enum name="none" value="-1" />
-        <enum name="fitXY" value="0" />
-        <enum name="fitStart" value="1" />
-        <enum name="fitCenter" value="2" />
-        <enum name="fitEnd" value="3" />
-        <enum name="center" value="4" />
-        <enum name="centerInside" value="5" />
-        <enum name="centerCrop" value="6" />
-        <enum name="focusCrop" value="7" />
-    </attr>
-    <attr name="placeholderScaleType">
+    <attr name="scaleType">
         <enum name="none" value="-1" />
         <enum name="fitXY" value="0" />
         <enum name="fitStart" value="1" />
@@ -29,8 +18,7 @@
     <attr name="cornerRadius" format="dimension"/>
 
     <declare-styleable name="AbstractImageWrapperView">
-        <attr name="actualScaleType"/>
-        <attr name="placeholderScaleType"/>
+        <attr name="scaleType"/>
         <attr name="placeholderImage"/>
         <attr name="roundAsCircle"/>
         <attr name="cornerRadius"/>

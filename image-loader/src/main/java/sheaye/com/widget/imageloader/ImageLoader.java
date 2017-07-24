@@ -25,17 +25,11 @@ public interface ImageLoader {
 
     void setImageUri(Uri uri);
 
-    void setImageUrl(String url);
-
-    void setActualImageScaleType(int scaleType);
-
-    void setPlaceHolderScaleType(int scaleType);
+    void setImageScaleType(int scaleType);
 
     void setPlaceHolderImage(int resId);
 
     void setRoundAsCircle(boolean round);
-
-    void setCornerRadius(float topLeft, float topRight, float bottomLeft, float bottomRight);
 
     void setCornerRadius(float radius);
 

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -37,14 +38,12 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AbstractImageWrapperView, defStyleAttr, 0);
         mImageLoader = getImageLoader();
         addView(mImageLoader.getInnerView());
-        int actualScaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_actualScaleType, -1);
-        int placeholderScaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_placeholderScaleType, -1);
-        int placeholderImageId = typedArray.getResourceId(R.styleable.AbstractImageWrapperView_placeholderImage, -1);
+        int actualScaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_scaleType, -1);
+        int placeholderImageId = typedArray.getResourceId(R.styleable.AbstractImageWrapperView_placeholderImage, NO_ID);
         boolean asCircle = typedArray.getBoolean(R.styleable.AbstractImageWrapperView_roundAsCircle, false);
         int cornerRadius = typedArray.getDimensionPixelSize(R.styleable.AbstractImageWrapperView_cornerRadius, 0);
         typedArray.recycle();
-        mImageLoader.setActualImageScaleType(actualScaleType);
-        mImageLoader.setPlaceHolderScaleType(placeholderScaleType);
+        mImageLoader.setImageScaleType(actualScaleType);
         if (placeholderImageId != -1) {
             mImageLoader.setPlaceHolderImage(placeholderImageId);
         }
@@ -83,28 +82,17 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
      * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setImageUrl(String url) {
-        if (mImageLoader != null) {
-            mImageLoader.setImageUrl(url);
-        }
+        Uri uri = TextUtils.isEmpty(url) ? Uri.EMPTY : Uri.parse(url);
+        setImageUri(uri);
         return this;
     }
 
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setActualImageScaleType(int scaleType) {
+    public AbstractImageWrapperView setImageScaleType(int scaleType) {
         if (mImageLoader != null) {
-            mImageLoader.setActualImageScaleType(scaleType);
-        }
-        return this;
-    }
-
-    /**
-     * ensure it works, please call commit() in the end.
-     */
-    public AbstractImageWrapperView setPlaceHolderScaleType(int scaleType) {
-        if (mImageLoader != null) {
-            mImageLoader.setPlaceHolderScaleType(scaleType);
+            mImageLoader.setImageScaleType(scaleType);
         }
         return this;
     }
@@ -115,16 +103,6 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     public AbstractImageWrapperView setPlaceHolderImage(int resId) {
         if (mImageLoader != null) {
             mImageLoader.setPlaceHolderImage(resId);
-        }
-        return this;
-    }
-
-    /**
-     * ensure it works, please call commit() in the end.
-     */
-    public AbstractImageWrapperView setCornerRadius(float topLeft, float topRight, float bottomLeft, float bottomRight) {
-        if (mImageLoader != null) {
-            mImageLoader.setCornerRadius(topLeft, topRight, bottomLeft, bottomRight);
         }
         return this;
     }
@@ -154,7 +132,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
      */
     public AbstractImageWrapperView resize(int resizedWidth, int resizedHeight) {
         if (mImageLoader != null) {
-            mImageLoader.resize(resizedWidth,resizedHeight);
+            mImageLoader.resize(resizedWidth, resizedHeight);
         }
         return this;
     }

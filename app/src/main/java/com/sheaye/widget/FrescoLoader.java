@@ -57,7 +57,7 @@ public class FrescoLoader implements ImageLoader {
     }
 
     @Override
-    public void setActualImageScaleType(int index) {
+    public void setImageScaleType(int index) {
         ScalingUtils.ScaleType scaleType = mScaleTypes.get(index);
         if (mHierarchy != null) {
             mHierarchy.setActualImageScaleType(scaleType);
@@ -76,17 +76,6 @@ public class FrescoLoader implements ImageLoader {
     }
 
     @Override
-    public void setCornerRadius(float topLeft, float topRight, float bottomLeft, float bottomRight) {
-        RoundingParams params = new RoundingParams();
-        params.setCornersRadii(topLeft, topRight, bottomRight, bottomLeft);
-        if (mHierarchy != null) {
-            mHierarchy.setRoundingParams(params);
-        } else {
-            mHierarchyBuilder.setRoundingParams(params);
-        }
-    }
-
-    @Override
     public void setCornerRadius(float radius) {
         RoundingParams params = new RoundingParams();
         params.setCornersRadius(radius);
@@ -101,14 +90,6 @@ public class FrescoLoader implements ImageLoader {
         } else {
             mHierarchyBuilder.setRoundingParams(params);
         }
-    }
-
-    @Override
-    public void setPlaceHolderScaleType(int scaleType) {
-        if (mHierarchy != null) {
-            return;
-        }
-        mHierarchyBuilder.setPlaceholderImageScaleType(mScaleTypes.get(scaleType));
     }
 
     @Override
@@ -142,14 +123,6 @@ public class FrescoLoader implements ImageLoader {
             return;
         }
         mUri = uri;
-    }
-
-    @Override
-    public void setImageUrl(String url) {
-        if (TextUtils.isEmpty(url)) {
-            return;
-        }
-        mUri = Uri.parse(url);
     }
 
 }
