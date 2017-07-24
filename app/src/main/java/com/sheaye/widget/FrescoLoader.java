@@ -1,16 +1,21 @@
-package com.sheaye.sample.fresco;
+package com.sheaye.widget;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.IdRes;
 import android.support.v4.util.SparseArrayCompat;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import sheaye.com.widget.imageloader.ImageLoader;
 
@@ -36,6 +41,10 @@ public class FrescoLoader implements ImageLoader {
     private SimpleDraweeView mDraweeView;
     private GenericDraweeHierarchyBuilder mHierarchyBuilder;
     private GenericDraweeHierarchy mHierarchy;
+    private int mResizedWidth;
+    private int mResizedHeight;
+    private Uri mUri;
+    private boolean doResize;
 
     public FrescoLoader(Context context) {
         mDraweeView = new SimpleDraweeView(context);
@@ -67,12 +76,29 @@ public class FrescoLoader implements ImageLoader {
     }
 
     @Override
+    public void setCornerRadius(float topLeft, float topRight, float bottomLeft, float bottomRight) {
+        RoundingParams params = new RoundingParams();
+        params.setCornersRadii(topLeft, topRight, bottomRight, bottomLeft);
+        if (mHierarchy != null) {
+            mHierarchy.setRoundingParams(params);
+        } else {
+            mHierarchyBuilder.setRoundingParams(params);
+        }
+    }
+
+    @Override
+    public void setCornerRadius(float radius) {
+        RoundingParams params = new RoundingParams();
+        params.setCornersRadius(radius);
+    }
+
+    @Override
     public void setRoundAsCircle(boolean asCircle) {
         RoundingParams params = new RoundingParams();
         params.setRoundAsCircle(asCircle);
         if (mHierarchy != null) {
             mHierarchy.setRoundingParams(params);
-        }else {
+        } else {
             mHierarchyBuilder.setRoundingParams(params);
         }
     }
@@ -86,27 +112,38 @@ public class FrescoLoader implements ImageLoader {
     }
 
     @Override
+    public void resize(int width, int height) {
+        doResize = true;
+        mResizedWidth = width;
+        mResizedHeight = height;
+    }
+
+    @Override
     public void commit() {
-        if (mHierarchy != null) {
-            return;
+        if (mHierarchy == null) {
+            mHierarchy = mHierarchyBuilder.build();
+            mDraweeView.setHierarchy(mHierarchy);
         }
-        mHierarchy = mHierarchyBuilder.build();
-        mDraweeView.setHierarchy(mHierarchy);
+        ImageRequestBuilder requestBuilder = ImageRequestBuilder.newBuilderWithSource(mUri);
+        if (doResize) {
+            requestBuilder.setResizeOptions(new ResizeOptions(mResizedWidth, mResizedHeight));
+        }
+        AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setOldController(mDraweeView.getController())
+                .setImageRequest(requestBuilder.build())
+                .build();
+        mDraweeView.setController(controller);
+
     }
 
     @Override
     public void setImageUri(Uri uri) {
-        uri = uri == null ? Uri.parse("") : uri;
-        if (mDraweeView != null) {
-            mDraweeView.setImageURI(uri);
-        }
+        mUri = uri == null ? Uri.EMPTY : uri;
     }
 
     @Override
     public void setImageUrl(String url) {
-        if (mDraweeView != null) {
-            mDraweeView.setImageURI(Uri.parse(url));
-        }
+        mUri = TextUtils.isEmpty(url) ? Uri.EMPTY : Uri.parse(url);
     }
 
 }

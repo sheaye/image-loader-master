@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.support.annotation.AttrRes;
-import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -38,9 +37,20 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AbstractImageWrapperView, defStyleAttr, 0);
         mImageLoader = getImageLoader();
         addView(mImageLoader.getInnerView());
-        int scaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_scaleType, -1);
-        mImageLoader.setActualImageScaleType(scaleType);
+        int actualScaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_actualScaleType, -1);
+        int placeholderScaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_placeholderScaleType, -1);
+        int placeholderImageId = typedArray.getResourceId(R.styleable.AbstractImageWrapperView_placeholderImage, -1);
+        boolean asCircle = typedArray.getBoolean(R.styleable.AbstractImageWrapperView_roundAsCircle, false);
+        int cornerRadius = typedArray.getDimensionPixelSize(R.styleable.AbstractImageWrapperView_cornerRadius, 0);
         typedArray.recycle();
+        mImageLoader.setActualImageScaleType(actualScaleType);
+        mImageLoader.setPlaceHolderScaleType(placeholderScaleType);
+        if (placeholderImageId != -1) {
+            mImageLoader.setPlaceHolderImage(placeholderImageId);
+        }
+        mImageLoader.setRoundAsCircle(asCircle);
+        mImageLoader.setCornerRadius(cornerRadius);
+        mImageLoader.commit();
     }
 
     public abstract ImageLoader getImageLoader();
@@ -60,7 +70,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     }
 
     /**
-     * ensure this works, please call commit() in the end.
+     * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setImageUri(Uri uri) {
         if (mImageLoader != null) {
@@ -70,7 +80,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     }
 
     /**
-     * ensure this works, please call commit() in the end.
+     * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setImageUrl(String url) {
         if (mImageLoader != null) {
@@ -80,7 +90,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     }
 
     /**
-     * ensure this works, please call commit() in the end.
+     * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setActualImageScaleType(int scaleType) {
         if (mImageLoader != null) {
@@ -90,7 +100,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     }
 
     /**
-     * ensure this works, please call commit() in the end.
+     * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setPlaceHolderScaleType(int scaleType) {
         if (mImageLoader != null) {
@@ -100,7 +110,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     }
 
     /**
-     * ensure this works, please call commit() in the end.
+     * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setPlaceHolderImage(int resId) {
         if (mImageLoader != null) {
@@ -110,11 +120,41 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     }
 
     /**
-     * ensure this works, please call commit() in the end.
+     * ensure it works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setCornerRadius(float topLeft, float topRight, float bottomLeft, float bottomRight) {
+        if (mImageLoader != null) {
+            mImageLoader.setCornerRadius(topLeft, topRight, bottomLeft, bottomRight);
+        }
+        return this;
+    }
+
+    /**
+     * ensure it works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView setCornerRadius(float radius) {
+        if (mImageLoader != null) {
+            mImageLoader.setCornerRadius(radius);
+        }
+        return this;
+    }
+
+    /**
+     * ensure it works, please call commit() in the end.
      */
     public AbstractImageWrapperView setRoundAsCircle(boolean round) {
         if (mImageLoader != null) {
             mImageLoader.setRoundAsCircle(round);
+        }
+        return this;
+    }
+
+    /**
+     * ensure it works, please call commit() in the end.
+     */
+    public AbstractImageWrapperView resize(int resizedWidth, int resizedHeight) {
+        if (mImageLoader != null) {
+            mImageLoader.resize(resizedWidth,resizedHeight);
         }
         return this;
     }

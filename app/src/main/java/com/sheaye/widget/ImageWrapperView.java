@@ -1,4 +1,4 @@
-package com.sheaye.sample.fresco;
+package com.sheaye.widget;
 
 import android.content.Context;
 import android.support.annotation.AttrRes;

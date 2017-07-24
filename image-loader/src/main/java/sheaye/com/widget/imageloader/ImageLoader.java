@@ -21,11 +21,11 @@ public interface ImageLoader {
         int FOCUS_CROP = 7;
     }
 
+    View getInnerView();
+
     void setImageUri(Uri uri);
 
     void setImageUrl(String url);
-
-    View getInnerView();
 
     void setActualImageScaleType(int scaleType);
 
@@ -34,6 +34,12 @@ public interface ImageLoader {
     void setPlaceHolderImage(int resId);
 
     void setRoundAsCircle(boolean round);
+
+    void setCornerRadius(float topLeft, float topRight, float bottomLeft, float bottomRight);
+
+    void setCornerRadius(float radius);
+
+    void resize(int width, int height);
 
     void commit();
 }
