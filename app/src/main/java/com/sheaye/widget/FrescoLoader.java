@@ -43,7 +43,7 @@ public class FrescoLoader implements ImageLoader {
     private GenericDraweeHierarchy mHierarchy;
     private int mResizedWidth;
     private int mResizedHeight;
-    private Uri mUri;
+    private Uri mUri = Uri.EMPTY;
     private boolean doResize;
 
     public FrescoLoader(Context context) {
@@ -138,12 +138,18 @@ public class FrescoLoader implements ImageLoader {
 
     @Override
     public void setImageUri(Uri uri) {
-        mUri = uri == null ? Uri.EMPTY : uri;
+        if (uri == null) {
+            return;
+        }
+        mUri = uri;
     }
 
     @Override
     public void setImageUrl(String url) {
-        mUri = TextUtils.isEmpty(url) ? Uri.EMPTY : Uri.parse(url);
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+        mUri = Uri.parse(url);
     }
 
 }
