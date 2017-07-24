@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:roundAsCircle="true"
-        app:actualScaleType="centerCrop"
-        app:placeholderScaleType="centerCrop"
+        app:scaleType="centerCrop"
         app:placeholderImage="@drawable/ic_place_holder"/>
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package sheaye.com.widget.imageloader;
+package com.sheaye.widget;
 
 import android.net.Uri;
 import android.view.View;
@@ -10,7 +10,7 @@ import android.view.View;
 
 public interface ImageLoader {
 
-    interface ScaleType {
+    interface ScaleIndex {
         int FIT_XY = 0;
         int FIT_START = 1;
         int FIT_CENTER = 2;
@@ -25,7 +25,7 @@ public interface ImageLoader {
 
     void setImageUri(Uri uri);
 
-    void setImageScaleType(int scaleType);
+    void setImageScaleType(int scaleIndex);
 
     void setPlaceHolderImage(int resId);
 

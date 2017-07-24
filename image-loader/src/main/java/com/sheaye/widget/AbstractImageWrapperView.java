@@ -1,4 +1,4 @@
-package sheaye.com.widget.imageloader;
+package com.sheaye.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -49,7 +49,6 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
         }
         mImageLoader.setRoundAsCircle(asCircle);
         mImageLoader.setCornerRadius(cornerRadius);
-        mImageLoader.commit();
     }
 
     public abstract ImageLoader getImageLoader();

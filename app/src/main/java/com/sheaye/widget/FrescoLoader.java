@@ -3,21 +3,17 @@ package com.sheaye.widget;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.util.SparseArrayCompat;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.AbstractDraweeController;
-import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.drawable.ScalingUtils.ScaleType;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
-import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-
-import sheaye.com.widget.imageloader.ImageLoader;
 
 /**
  * Created by yexinyan on 2017/7/22.
@@ -25,16 +21,16 @@ import sheaye.com.widget.imageloader.ImageLoader;
 
 public class FrescoLoader implements ImageLoader {
 
-    private SparseArrayCompat<ScalingUtils.ScaleType> mScaleTypes = new SparseArrayCompat<ScalingUtils.ScaleType>() {
+    private SparseArrayCompat<ScaleType> mScaleTypes = new SparseArrayCompat<ScaleType>() {
         {
-            append(ScaleType.FIT_XY, ScalingUtils.ScaleType.FIT_XY);
-            append(ScaleType.FIT_START, ScalingUtils.ScaleType.FIT_START);
-            append(ScaleType.FIT_CENTER, ScalingUtils.ScaleType.FIT_CENTER);
-            append(ScaleType.FIT_END, ScalingUtils.ScaleType.FIT_END);
-            append(ScaleType.CENTER, ScalingUtils.ScaleType.CENTER);
-            append(ScaleType.CENTER_INSIDE, ScalingUtils.ScaleType.CENTER_INSIDE);
-            append(ScaleType.CENTER_CROP, ScalingUtils.ScaleType.CENTER_CROP);
-            append(ScaleType.FOCUS_CROP, ScalingUtils.ScaleType.FOCUS_CROP);
+            append(ScaleIndex.FIT_XY, ScaleType.FIT_XY);
+            append(ScaleIndex.FIT_START, ScaleType.FIT_START);
+            append(ScaleIndex.FIT_CENTER, ScaleType.FIT_CENTER);
+            append(ScaleIndex.FIT_END, ScaleType.FIT_END);
+            append(ScaleIndex.CENTER, ScaleType.CENTER);
+            append(ScaleIndex.CENTER_INSIDE, ScaleType.CENTER_INSIDE);
+            append(ScaleIndex.CENTER_CROP, ScaleType.CENTER_CROP);
+            append(ScaleIndex.FOCUS_CROP, ScaleType.FOCUS_CROP);
         }
     };
 
@@ -57,8 +53,8 @@ public class FrescoLoader implements ImageLoader {
     }
 
     @Override
-    public void setImageScaleType(int index) {
-        ScalingUtils.ScaleType scaleType = mScaleTypes.get(index);
+    public void setImageScaleType(int scaleIndex) {
+        ScaleType scaleType = mScaleTypes.get(scaleIndex);
         if (mHierarchy != null) {
             mHierarchy.setActualImageScaleType(scaleType);
         } else {
@@ -79,6 +75,11 @@ public class FrescoLoader implements ImageLoader {
     public void setCornerRadius(float radius) {
         RoundingParams params = new RoundingParams();
         params.setCornersRadius(radius);
+        if (mHierarchy != null) {
+            mHierarchy.setRoundingParams(params);
+        } else {
+            mHierarchyBuilder.setRoundingParams(params);
+        }
     }
 
     @Override

@@ -6,8 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import sheaye.com.widget.imageloader.ImageLoader;
-import sheaye.com.widget.imageloader.AbstractImageWrapperView;
+import com.sheaye.widget.glide.GlideLoader;
 
 /**
  * Created by yexinyan on 2017/7/23.
@@ -28,6 +27,6 @@ public class ImageWrapperView extends AbstractImageWrapperView {
 
     @Override
     public ImageLoader getImageLoader() {
-        return new FrescoLoader(getContext());
+        return new GlideLoader(getContext());
     }
 }

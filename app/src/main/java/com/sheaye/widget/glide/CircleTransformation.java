@@ -24,10 +24,6 @@ public class CircleTransformation extends BitmapTransformation {
         super(context);
     }
 
-    public CircleTransformation(BitmapPool bitmapPool) {
-        super(bitmapPool);
-    }
-
     @Override
     public String getId() {
         return "CropCircleTransformation()";
