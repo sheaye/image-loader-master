@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="imageLoader" format="reference"/>
+    <attr name="imageLoader" format="reference" />
     <attr name="scaleType">
         <enum name="none" value="-1" />
         <enum name="fitXY" value="0" />
@@ -13,15 +13,20 @@
         <enum name="centerCrop" value="6" />
         <enum name="focusCrop" value="7" />
     </attr>
-    <attr name="placeholderImage" format="reference"/>
-    <attr name="roundAsCircle" format="boolean"/>
-    <attr name="cornerRadius" format="dimension"/>
-
-    <declare-styleable name="AbstractImageWrapperView">
-        <attr name="scaleType"/>
-        <attr name="placeholderImage"/>
-        <attr name="roundAsCircle"/>
-        <attr name="cornerRadius"/>
+    <attr name="placeholderImage" format="reference" />
+    <attr name="roundAsCircle" format="boolean" />
+    <attr name="cornerRadius" format="dimension" />
+    <attr name="loaderType">
+        <enum name="fresco" value="0" />
+        <enum name="glide" value="1" />
+        <enum name="picasso" value="2" />
+    </attr>
+    <declare-styleable name="ImageWrapperView">
+        <attr name="loaderType"/>
+        <attr name="scaleType" />
+        <attr name="placeholderImage" />
+        <attr name="roundAsCircle" />
+        <attr name="cornerRadius" />
     </declare-styleable>
 
 </resources>

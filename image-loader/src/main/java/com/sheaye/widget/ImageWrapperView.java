@@ -10,37 +10,54 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+import com.sheaye.widget.fresco.FrescoLoader;
+import com.sheaye.widget.glide.GlideLoader;
+
 /**
  * Created by yexinyan on 2017/7/21.
  */
 
-public abstract class AbstractImageWrapperView extends FrameLayout {
+public class ImageWrapperView extends FrameLayout {
 
     private static final String TAG = "ImageWrapperView";
+    public static final int FRESCO = 0;
+    public static final int GLIDE = 1;
+    public static final int PICASSO = 2;
     private ImageLoader mImageLoader;
 
-    public AbstractImageWrapperView(@NonNull Context context) {
+    public ImageWrapperView(@NonNull Context context) {
         this(context, null, 0);
     }
 
-    public AbstractImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+    public ImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, R.attr.imageLoader);
     }
 
-    public AbstractImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public ImageWrapperView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context, attrs, defStyleAttr);
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AbstractImageWrapperView, defStyleAttr, 0);
-        mImageLoader = getImageLoader();
-        addView(mImageLoader.getInnerView());
-        int actualScaleType = typedArray.getInt(R.styleable.AbstractImageWrapperView_scaleType, -1);
-        int placeholderImageId = typedArray.getResourceId(R.styleable.AbstractImageWrapperView_placeholderImage, NO_ID);
-        boolean asCircle = typedArray.getBoolean(R.styleable.AbstractImageWrapperView_roundAsCircle, false);
-        int cornerRadius = typedArray.getDimensionPixelSize(R.styleable.AbstractImageWrapperView_cornerRadius, 0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageWrapperView, defStyleAttr, 0);
+
+        int loaderType = typedArray.getInt(R.styleable.ImageWrapperView_loaderType, 0);
+        int actualScaleType = typedArray.getInt(R.styleable.ImageWrapperView_scaleType, -1);
+        int placeholderImageId = typedArray.getResourceId(R.styleable.ImageWrapperView_placeholderImage, NO_ID);
+        boolean asCircle = typedArray.getBoolean(R.styleable.ImageWrapperView_roundAsCircle, false);
+        int cornerRadius = typedArray.getDimensionPixelSize(R.styleable.ImageWrapperView_cornerRadius, 0);
         typedArray.recycle();
+        switch (loaderType) {
+            case FRESCO:
+                mImageLoader = new FrescoLoader(context);
+                break;
+            case GLIDE:
+                mImageLoader = new GlideLoader(context);
+                break;
+            case PICASSO:
+                break;
+        }
+        addView(mImageLoader.getInnerView());
         if (actualScaleType != -1) {
             setImageScaleType(actualScaleType);
         }
@@ -53,8 +70,6 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
             setCornerRadius(cornerRadius);
         }
     }
-
-    protected abstract ImageLoader getImageLoader();
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -73,7 +88,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setImageUri(Uri uri) {
+    public ImageWrapperView setImageUri(Uri uri) {
         if (mImageLoader != null) {
             mImageLoader.setImageUri(uri);
         }
@@ -83,7 +98,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setImageUrl(String url) {
+    public ImageWrapperView setImageUrl(String url) {
         Uri uri = TextUtils.isEmpty(url) ? Uri.EMPTY : Uri.parse(url);
         setImageUri(uri);
         return this;
@@ -92,7 +107,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setImageScaleType(int scaleType) {
+    public ImageWrapperView setImageScaleType(int scaleType) {
         if (mImageLoader != null) {
             mImageLoader.setImageScaleType(scaleType);
         }
@@ -102,7 +117,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setPlaceHolderImage(int resId) {
+    public ImageWrapperView setPlaceHolderImage(int resId) {
         if (mImageLoader != null) {
             mImageLoader.setPlaceHolderImage(resId);
         }
@@ -112,7 +127,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setCornerRadius(float radius) {
+    public ImageWrapperView setCornerRadius(float radius) {
         if (mImageLoader != null) {
             mImageLoader.setCornerRadius(radius);
         }
@@ -122,7 +137,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView setRoundAsCircle(boolean round) {
+    public ImageWrapperView setRoundAsCircle(boolean round) {
         if (mImageLoader != null) {
             mImageLoader.setRoundAsCircle(round);
         }
@@ -132,7 +147,7 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
     /**
      * ensure it works, please call commit() in the end.
      */
-    public AbstractImageWrapperView resize(int resizedWidth, int resizedHeight) {
+    public ImageWrapperView resize(int resizedWidth, int resizedHeight) {
         if (mImageLoader != null) {
             mImageLoader.resize(resizedWidth, resizedHeight);
         }

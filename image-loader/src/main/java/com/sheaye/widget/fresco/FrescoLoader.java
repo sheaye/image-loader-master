@@ -1,8 +1,9 @@
-package com.sheaye.widget;
+package com.sheaye.widget.fresco;
 
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.util.SparseArrayCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -14,12 +15,19 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.sheaye.widget.ImageLoader;
 
 /**
  * Created by yexinyan on 2017/7/22.
  */
 
 public class FrescoLoader implements ImageLoader {
+
+    static {
+        Log.e("ImageLoader","image library is fresco");
+    }
+
+    private static boolean mInitialized;
 
     private SparseArrayCompat<ScaleType> mScaleTypes = new SparseArrayCompat<ScaleType>() {
         {
@@ -43,6 +51,10 @@ public class FrescoLoader implements ImageLoader {
     private boolean doResize;
 
     public FrescoLoader(Context context) {
+        if (!mInitialized) {
+            Fresco.initialize(context);
+            mInitialized = true;
+        }
         mDraweeView = new SimpleDraweeView(context);
         mHierarchyBuilder = new GenericDraweeHierarchyBuilder(context.getResources());
     }

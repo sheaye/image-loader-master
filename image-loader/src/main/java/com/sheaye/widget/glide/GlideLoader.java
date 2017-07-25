@@ -3,13 +3,13 @@ package com.sheaye.widget.glide;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.util.SparseArrayCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
-
 import com.sheaye.widget.ImageLoader;
 
 /**
@@ -17,6 +17,10 @@ import com.sheaye.widget.ImageLoader;
  */
 
 public class GlideLoader implements ImageLoader {
+
+    static {
+        Log.e("ImageLoader","image library is glide");
+    }
 
     private SparseArrayCompat<ScaleType> mScaleTypes = new SparseArrayCompat<ScaleType>() {
         {
