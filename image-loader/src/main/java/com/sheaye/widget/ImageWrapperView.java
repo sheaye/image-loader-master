@@ -40,7 +40,6 @@ public class ImageWrapperView extends FrameLayout {
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageWrapperView, defStyleAttr, 0);
-
         int loaderType = typedArray.getInt(R.styleable.ImageWrapperView_loaderType, 0);
         int actualScaleType = typedArray.getInt(R.styleable.ImageWrapperView_scaleType, -1);
         int placeholderImageId = typedArray.getResourceId(R.styleable.ImageWrapperView_placeholderImage, NO_ID);

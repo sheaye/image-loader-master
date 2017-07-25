@@ -13,6 +13,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         app:scaleType="centerCrop"
+        app:cornerRadius="10dp"
         app:placeholderImage="@drawable/ic_place_holder"/>
 
 </FrameLayout>
