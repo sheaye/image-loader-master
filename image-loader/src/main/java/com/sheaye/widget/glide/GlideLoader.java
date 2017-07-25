@@ -36,13 +36,6 @@ public class GlideLoader implements ImageLoader {
 
     private ImageView mImageView;
     private DrawableTypeRequest<Uri> mRequestBuilder;
-    private int mPlaceholderResId;
-    private Uri mUri;
-    private boolean mAsCircle;
-    private float mRadius;
-    private boolean doResize;
-    private int mResizedWidth;
-    private int mResizedHeight;
 
     public GlideLoader(Context context) {
         mImageView = new ImageView(context);
@@ -56,7 +49,6 @@ public class GlideLoader implements ImageLoader {
 
     @Override
     public void setImageUri(Uri uri) {
-//        mUri = uri;
         mRequestBuilder.load(uri);
     }
 
@@ -68,12 +60,10 @@ public class GlideLoader implements ImageLoader {
     @Override
     public void setPlaceHolderImage(int resId) {
         mRequestBuilder.placeholder(resId);
-//        mPlaceholderResId = resId;
     }
 
     @Override
     public void setRoundAsCircle(boolean asCircle) {
-//        mAsCircle = asCircle;
         if (asCircle) {
             mRequestBuilder.transform(new CircleTransformation(mImageView.getContext()));
         }
@@ -81,33 +71,16 @@ public class GlideLoader implements ImageLoader {
 
     @Override
     public void setCornerRadius(float radius) {
-//        mRadius = radius;
         mRequestBuilder.transform(new RoundCornerTransformation(mImageView.getContext(), radius));
     }
 
     @Override
     public void resize(int width, int height) {
-//        doResize = true;
-//        mResizedWidth = width;
-//        mResizedHeight = height;
         mRequestBuilder.override(width, height);
     }
 
     @Override
     public void commit() {
         mRequestBuilder.into(mImageView);
-        /*DrawableRequestBuilder<Uri> requestBuilder =
-                mRequestBuilder
-                        .load(mUri)
-                        .placeholder(mPlaceholderResId);
-        if (mAsCircle) {
-            requestBuilder.transform(new CircleTransformation(mImageView.getContext()));
-        } else if (mRadius != 0) {
-            requestBuilder.transform(new RoundCornerTransformation(mImageView.getContext(), mRadius));
-        }
-        if (doResize) {
-            requestBuilder.override(mResizedWidth, mResizedHeight);
-        }
-*/
     }
 }
