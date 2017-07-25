@@ -29,7 +29,7 @@ public interface ImageLoader {
 
     void setPlaceHolderImage(int resId);
 
-    void setRoundAsCircle(boolean round);
+    void setRoundAsCircle(boolean asCircle);
 
     void setCornerRadius(float radius);
 

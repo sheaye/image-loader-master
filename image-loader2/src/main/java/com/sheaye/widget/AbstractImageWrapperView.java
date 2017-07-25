@@ -10,8 +10,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import sheaye.com.widget.R;
-
 /**
  * Created by yexinyan on 2017/7/21.
  */
