@@ -41,15 +41,20 @@ public abstract class AbstractImageWrapperView extends FrameLayout {
         boolean asCircle = typedArray.getBoolean(R.styleable.AbstractImageWrapperView_roundAsCircle, false);
         int cornerRadius = typedArray.getDimensionPixelSize(R.styleable.AbstractImageWrapperView_cornerRadius, 0);
         typedArray.recycle();
-        mImageLoader.setImageScaleType(actualScaleType);
-        if (placeholderImageId != -1) {
-            mImageLoader.setPlaceHolderImage(placeholderImageId);
+        if (actualScaleType != -1) {
+            setImageScaleType(actualScaleType);
         }
-        mImageLoader.setRoundAsCircle(asCircle);
-        mImageLoader.setCornerRadius(cornerRadius);
+        if (placeholderImageId != NO_ID) {
+            setPlaceHolderImage(placeholderImageId);
+        }
+        if (asCircle) {
+            setRoundAsCircle(asCircle);
+        } else if (cornerRadius != 0) {
+            setCornerRadius(cornerRadius);
+        }
     }
 
-    public abstract ImageLoader getImageLoader();
+    protected abstract ImageLoader getImageLoader();
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
