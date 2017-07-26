@@ -28,21 +28,21 @@ public class RoundCornerTransformation extends BitmapTransformation {
         if (toTransform == null) {
             return null;
         }
-        Bitmap result = pool.get(toTransform.getWidth(), toTransform.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap result = pool.get(outWidth, outHeight, Bitmap.Config.ARGB_8888);
         if (result == null) {
-            result = Bitmap.createBitmap(toTransform.getWidth(), toTransform.getHeight(), Bitmap.Config.ARGB_8888);
+            result = Bitmap.createBitmap(outWidth, outHeight, Bitmap.Config.ARGB_8888);
         }
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
-        paint.setShader(new BitmapShader(toTransform, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
         paint.setAntiAlias(true);
-        RectF rectF = new RectF(0f, 0f, toTransform.getWidth(), toTransform.getHeight());
+        paint.setShader(new BitmapShader(toTransform, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+        RectF rectF = new RectF(0f, 0f, outWidth, outHeight);
         canvas.drawRoundRect(rectF, mRadius, mRadius, paint);
         return result;
     }
 
     @Override
     public String getId() {
-        return getClass().getName() + Math.round(mRadius);
+        return getClass().getName() + mRadius;
     }
 }

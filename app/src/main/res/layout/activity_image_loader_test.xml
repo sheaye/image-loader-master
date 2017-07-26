@@ -9,11 +9,11 @@
 
     <com.sheaye.widget.ImageWrapperView
         android:id="@+id/image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="600px"
+        android:layout_height="600px"
         android:layout_gravity="center"
-        app:scaleType="centerCrop"
-        app:cornerRadius="10dp"
+        app:scaleType="fitXY"
+        app:cornerRadius="30px"
         app:placeholderImage="@drawable/ic_place_holder"/>
 
 </FrameLayout>
