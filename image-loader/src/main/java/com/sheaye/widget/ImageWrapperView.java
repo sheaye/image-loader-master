@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.sheaye.widget.fresco.FrescoLoader;
@@ -100,6 +102,29 @@ public class ImageWrapperView extends FrameLayout {
     public ImageWrapperView setImageUrl(String url) {
         Uri uri = TextUtils.isEmpty(url) ? Uri.EMPTY : Uri.parse(url);
         setImageUri(uri);
+        return this;
+    }
+
+    /**
+     * 如果你使用的是阿里云服务器，通过此方法可以获取到目标尺寸的图片
+     */
+    public ImageWrapperView setAliyunUrl(String url, int width, int height) {
+        if (width > 0 && height > 0) {
+            url = String.format("%s?x-oss-process=image/resize,w_%d,h_%d", url, width, height);
+        } else {
+            Log.e(TAG, "error: with = 0 or height = 0 !");
+        }
+        setImageUrl(url);
+        return this;
+    }
+
+    /**
+     * 如果你使用的是阿里云服务器，通过此方法可以获取到目标尺寸的图片
+     * 此方法只适用于给定尺寸的ImageWrapperView
+     */
+    public ImageWrapperView setAliyunUrl(String url) {
+        ViewGroup.LayoutParams params = getLayoutParams();
+        setAliyunUrl(url, params.width, params.height);
         return this;
     }
 
