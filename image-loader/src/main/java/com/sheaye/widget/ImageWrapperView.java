@@ -112,7 +112,7 @@ public class ImageWrapperView extends FrameLayout {
         if (width > 0 && height > 0) {
             url = String.format("%s?x-oss-process=image/resize,w_%d,h_%d", url, width, height);
         } else {
-            Log.e(TAG, "error: with = 0 or height = 0 !");
+            Log.e(TAG, "error: with <= 0 or height <= 0 !");
         }
         setImageUrl(url);
         return this;
