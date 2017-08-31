@@ -68,6 +68,7 @@ public class ImageWrapperView extends FrameLayout {
         } else if (cornerRadius != 0) {
             setCornerRadius(cornerRadius);
         }
+        commit();
     }
 
     @Override

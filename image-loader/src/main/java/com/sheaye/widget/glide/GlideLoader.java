@@ -40,6 +40,7 @@ public class GlideLoader implements ImageLoader {
     public GlideLoader(Context context) {
         mImageView = new ImageView(context);
         mRequestBuilder = Glide.with(context).fromUri();
+        mRequestBuilder.load(null);
     }
 
     @Override
